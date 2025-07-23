@@ -12,14 +12,16 @@ class LinkRequest(BaseModel):
     expiry_seconds: int
 
 @app.post("/generate")
-def generate_link(data: LinkRequest):
+def generate_link(data: LinkRequest, request: Request):
     short_id = hashlib.md5((data.url + str(time.time())).encode()).hexdigest()[:6]
     expires_at = int(time.time()) + data.expiry_seconds
     store[short_id] = {"url": data.url, "expires_at": expires_at}
+    
     return {
-        "short_url": f"https://yourdomain.com/{short_id}",
+        "short_url": f"https://expiry-url.onrender.com/{short_id}",
         "expires_at": expires_at
     }
+
 
 @app.get("/{short_id}")
 def redirect(short_id: str):
