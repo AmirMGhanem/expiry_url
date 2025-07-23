@@ -25,7 +25,7 @@ def generate_link(data: LinkRequest):
 def redirect(short_id: str):
     entry = store.get(short_id)
     if not entry:
-        raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=404, detail="Not found api")
     if time.time() > entry["expires_at"]:
         return JSONResponse(content={"message": "This link has expired."}, status_code=410)
     return RedirectResponse(url=entry["url"])
