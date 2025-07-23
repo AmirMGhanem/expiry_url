@@ -17,10 +17,7 @@ def generate_link(data: LinkRequest, request: Request):
     expires_at = int(time.time()) + data.expiry_seconds
     store[short_id] = {"url": data.url, "expires_at": expires_at}
     
-    return {
-        "short_url": f"https://expiry-url.onrender.com/{short_id}",
-        "expires_at": expires_at
-    }
+    return f"https://expiry-url.onrender.com/{short_id}"
 
 
 @app.get("/{short_id}")
